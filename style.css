@@ -1,0 +1,29 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+body {
+    
+}
+.header-container {
+    width: 1200px;
+    height: 100px;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+header {
+    background-color: lightgrey;
+}
+h1 {
+    color: red;
+    text-transform: uppercase;
+}
+#ricerca_utente {
+    border-radius: 5px;
+}
+button {
+    border-radius: 5px;
+}
