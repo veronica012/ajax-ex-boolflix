@@ -26,15 +26,15 @@ $('#bottone').click(function(){
                 var film_corrente = array_film[i];
                 console.log(film_corrente);
             //RECUPERARE LE PROPRIETA' DELL'OGGETTO DA STAMPARE IN PAGINA: TITOLO, TITOLO ORIGINALE, LINGUA, VOTO
-                var titolo = film_corrente.title;
-                var titolo_originale = film_corrente.original_title;
-                var lingua = film_corrente.original_language;
-                var voto = film_corrente.vote_average;
-                console.log(titolo);
-                console.log(titolo_originale);
-                console.log(lingua);
-                console.log(voto);
-            //creo un nuovo oggetto che contiene solo alcune proprietà
+                // var titolo = film_corrente.title;
+                // var titolo_originale = film_corrente.original_title;
+                // var lingua = film_corrente.original_language;
+                // var voto = film_corrente.vote_average;
+                // console.log(titolo);
+                // console.log(titolo_originale);
+                // console.log(lingua);
+                // console.log(voto);
+            //creo un nuovo oggetto in cui salvo le proprietà che voglio quindi elimino le variabili create precedentemente
             var nuovo_oggetto = {
                 'titolo':film_corrente.title,
                 'titolo_originale':film_corrente.original_title,
@@ -43,7 +43,8 @@ $('#bottone').click(function(){
             }
             console.log(nuovo_oggetto);
             //stampare in pagina titolo, titolo originale, lingua originale, voto
-            $('main').append('<ul><li>' + titolo +'</li><li>' + titolo_originale + '</li><li>' + lingua +'</li><li>' + voto + '</li></ul>');
+            $('main').append('<ul><li class="titolo_film">' + film_corrente.title +'</li><li class="titolo_originale">' + film_corrente.original_title  + '</li><li class"lingua">' + film_corrente.original_language +'</li><li class="voto_average">' + film_corrente.vote_average + '</li></ul>');
+
             }
 
         },
