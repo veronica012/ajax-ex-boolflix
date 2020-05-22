@@ -16,8 +16,16 @@ $('#bottone').click(function(){
             'query': testo_utente,
             'language': 'it'
         },
-        'success': function(){
-            //istruzioni per recuperare i dati
+        'success': function(data){
+            // recuperare l'array di fil
+            var array_film = data.results;
+            console.log(array_film); //è un array di oggetti
+            //recuperare il singolo film dalla lista
+            for(var i = 0; i < array_film.length; i++) {
+                var film_corrente = array_film[i];
+                console.log(film_corrente);
+            } 
+            //stampare in pagina titolo titolo originale lingua voto
 
         },
         'error': function() {
@@ -29,3 +37,5 @@ $('#bottone').click(function(){
 });
 
 });
+
+//ricordare che data riga14 è diverso da data riga19
