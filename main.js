@@ -34,9 +34,16 @@ $('#bottone').click(function(){
                 console.log(titolo_originale);
                 console.log(lingua);
                 console.log(voto);
+            //creo un nuovo oggetto che contiene solo alcune proprietà
+            var nuovo_oggetto = {
+                'titolo':film_corrente.title,
+                'titolo_originale':film_corrente.original_title,
+                'lingua':film_corrente.original_language,
+                'voto':film_corrente.vote_average
+            }
+            console.log(nuovo_oggetto);
             //stampare in pagina titolo, titolo originale, lingua originale, voto
             $('main').append('<ul><li>' + titolo +'</li><li>' + titolo_originale + '</li><li>' + lingua +'</li><li>' + voto + '</li></ul>');
-
             }
 
         },
