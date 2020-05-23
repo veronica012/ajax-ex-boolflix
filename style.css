@@ -5,7 +5,8 @@
 }
 body {
     font-family: 'Helvetica Neue', sans-serif;
-
+    background-color: black;
+    color:white;
 }
 .header-container {
     width: 1200px;
@@ -27,4 +28,13 @@ h1 {
 }
 button {
     border-radius: 5px;
+    border: none;
+    padding: 7px;
+    color: white;
+    font-weight: bold;
+    background-color: red;
+}
+input {
+    border: none;
+    height: 30px;
 }
