@@ -9,11 +9,6 @@ $('#bottone').click(function(){
     console.log(testo_utente);
 //ogni nuovo input dell'utente sono eliminati i dati della ricerca precedente
     $('main').html('');
-//quando l'input è vuoto il button è disabilitato
-    if (testo_utente == '') {
-        $(button).prop("disabled", true);
-        console.log(button)
-    }
 //chiamata funzione ajax
     $.ajax({
         'url': 'https://api.themoviedb.org/3/search/movie',
@@ -29,7 +24,7 @@ $('#bottone').click(function(){
             console.log(array_film);
             //ciclo l'array per recuperare ogni singolo elemento, ogni elemento è un oggetto
             for(var i = 0; i < array_film.length; i++) {
-                // recupero ogni singolo film dalla lista
+            // recupero ogni singolo film dalla lista
                 var film_corrente= array_film[i];
                 console.log(film_corrente);
             //creo un nuovo oggetto in cui salvo le proprietà che voglio quindi elimino le variabili create precedentemente
@@ -40,7 +35,6 @@ $('#bottone').click(function(){
                 'voto':film_corrente.vote_average
             }
             console.log(nuovo_oggetto);
-
             //stampare in pagina titolo, titolo originale, lingua originale, voto
             $('main').append('<ul class="lista-proprietà-film"><li class="titolo-film">' + film_corrente.title +'</li><li class="titolo-originale">' + film_corrente.original_title  + '</li><li class"lingua">' + film_corrente.original_language +'</li><li class="voto-average">' + film_corrente.vote_average + '</li></ul>');
 
@@ -51,10 +45,7 @@ $('#bottone').click(function(){
         }
     });
 });
-
 });
-
-
 
 
 //ricorda che data riga14 è diverso da data riga19
