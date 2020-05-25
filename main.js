@@ -38,11 +38,10 @@ $('#bottone').click(function(){
             var nuovo_oggetto = {
                 'titolo':film_corrente.title,
                 'titolo_originale':film_corrente.original_title,
-                'lingua':film_corrente.original_language,
+                'lingua':bandierine(film_corrente.original_language),
                 'voto': stelle(film_corrente.vote_average)
             }
             console.log(nuovo_oggetto);
-
             //stampare in pagina titolo, titolo originale, lingua originale, voto con il template
             // $('main').append('<ul class="lista-proprietà-film"><li class="titolo">' + film_corrente.title +'</li><li class="titolo-originale">' + film_corrente.original_title  + '</li><li class"lingua">' + film_corrente.original_language +'</li><li class="voto-average">' + film_corrente.vote_average + '</li></ul>');
             var html_finale = template_function(nuovo_oggetto);
@@ -53,11 +52,23 @@ $('#bottone').click(function(){
             alert('Si è verificato un errore')
         }
     });
+    //nuova chiamata ajax
+    $.ajax({
+        'url': 'https://api.themoviedb.org/3/search/tv',
+        'method': 'GET',
+        'data': {
+            'api_key': '6fb6f7fed203f8fd60f7a424fa51f6e5',
+            'query': testo_utente,
+            'language': 'it'
+        },
+        'success': function(data) {
+
+        },
+
+    });
 } else {
     alert('Non hai effettuato nessuna ricerca') //alert per l'utente che non ha
 }
-//chiamata ajax serie tv
-
 
 });
 //funzione per sostituire le stelle al voto che contiene anche il calcolo dal numero float a intero
@@ -69,4 +80,16 @@ function stelle(voti){
     }
     return stella
 }
+
+function bandierine(lingua) {
+    var array_lingue = ['it', 'en'];
+
+    if (array_lingue.includes(lingua)) {
+        var bandierina = '<img src="img/' + lingua + '-flag.png">';
+    } else {
+        var lingua_originale = '';
+    }
+    return bandierina
+}
+
 });
