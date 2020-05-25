@@ -39,11 +39,10 @@ $('#bottone').click(function(){
                 'titolo':film_corrente.title,
                 'titolo_originale':film_corrente.original_title,
                 'lingua':film_corrente.original_language,
-                'voto': film_corrente.vote_average
+                'voto': stelle(film_corrente.vote_average)
             }
             console.log(nuovo_oggetto);
-            //dot notation per sovrascrivre il valore di 'voto' arrotondato in un numero intero tra 1 e 5
-            nuovo_oggetto.voto = Math.ceil(film_corrente.vote_average / 2);
+
             //stampare in pagina titolo, titolo originale, lingua originale, voto con il template
             // $('main').append('<ul class="lista-proprietà-film"><li class="titolo">' + film_corrente.title +'</li><li class="titolo-originale">' + film_corrente.original_title  + '</li><li class"lingua">' + film_corrente.original_language +'</li><li class="voto-average">' + film_corrente.vote_average + '</li></ul>');
             var html_finale = template_function(nuovo_oggetto);
@@ -57,6 +56,17 @@ $('#bottone').click(function(){
 } else {
     alert('Non hai effettuato nessuna ricerca') //alert per l'utente che non ha
 }
-});
+//chiamata ajax serie tv
 
+
+});
+//funzione per sostituire le stelle al voto che contiene anche il calcolo dal numero float a intero
+function stelle(voti){
+    var voto = Math.ceil(voti / 2);
+    var stella = '';
+    for (var i = 0; i < voto; i++) {
+        stella += '<i class="fas fa-star"></i>';
+    }
+    return stella
+}
 });
