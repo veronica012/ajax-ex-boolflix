@@ -6,7 +6,6 @@ var template_function = Handlebars.compile(template_html);
 
 //intercettare il clik sul bottone di ricerca_utente
 $('#bottone').click(function(){
-
 //leggere il testo scritto dall'ricerca_utente
     var testo_utente = $('#ricerca_utente').val().trim().toLowerCase();
     console.log(testo_utente);
@@ -15,7 +14,7 @@ $('#bottone').click(function(){
 //svutare l'input
     $('#ricerca_utente').val('');
 //ogni nuovo input dell'utente sono eliminati i dati della ricerca precedente
-    $('.container').html('');
+    $('.container-card').html('');
 //chiamata funzione ajax
 
     $.ajax({
@@ -40,16 +39,15 @@ $('#bottone').click(function(){
                 'titolo':film_corrente.title,
                 'titolo_originale':film_corrente.original_title,
                 'lingua':film_corrente.original_language,
-                'voto': Math.ceil(film_corrente.vote_average / 2)
+                'voto': film_corrente.vote_average
             }
             console.log(nuovo_oggetto);
+            //dot notation per sovrascrivre il valore di 'voto' arrotondato in un numero intero tra 1 e 5
+            nuovo_oggetto.voto = Math.ceil(film_corrente.vote_average / 2);
             //stampare in pagina titolo, titolo originale, lingua originale, voto con il template
             // $('main').append('<ul class="lista-proprietà-film"><li class="titolo">' + film_corrente.title +'</li><li class="titolo-originale">' + film_corrente.original_title  + '</li><li class"lingua">' + film_corrente.original_language +'</li><li class="voto-average">' + film_corrente.vote_average + '</li></ul>');
             var html_finale = template_function(nuovo_oggetto);
-            $('.container').append(html_finale);
-            //arrotondare il voto
-            // var voto_arrotondato = Math.ceil(film_corrente.vote_average / 2);
-            // console.log(voto_arrotondato);
+            $('.container-card').append(html_finale);
             }
         },
         'error': function() {
@@ -60,7 +58,5 @@ $('#bottone').click(function(){
     alert('Non hai effettuato nessuna ricerca') //alert per l'utente che non ha
 }
 });
+
 });
-
-
-//ricorda che data riga14 è diverso da data riga19
