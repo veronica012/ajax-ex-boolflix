@@ -106,9 +106,8 @@ function bandierine(lingua) {
 
     if (array_lingue.includes(lingua)) {
         var bandierina = '<img src="img/' + lingua + '-flag.png">';
-    } else {
-        var lingua_originale = '';
-    }
+    } 
+
     return bandierina
 }
 
