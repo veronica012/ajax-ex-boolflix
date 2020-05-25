@@ -62,9 +62,29 @@ $('#bottone').click(function(){
             'language': 'it'
         },
         'success': function(data) {
+            //recupero l'array con le serie tv
+            var array_serietv = data.results;
+            console.log(array_serietv);
+            //ciclo l'array per recuperare il singolo oggetto che è contenuto in array
+            for (var i = 0; i < array_serietv.length; i++) {
+                var serie_corrente = array_serietv[i];
+                console.log(serie_corrente);
+                //creo un nuovo oggetto in cui salvo le proprietà
+                var nuovo_oggetto = {
+                    'titolo': serie_corrente.name,
+                    'titolo_originale': serie_corrente.original_name,
+                    'lingua':bandierine(serie_corrente.original_language),
+                    'voto': stelle(serie_corrente.vote_average)
+                }
+                console.log(nuovo_oggetto);
+                var html_finale = template_function(nuovo_oggetto);
+                $('.container-card').append(html_finale);
+            }
 
         },
-
+        'error': function() {
+            alert('Si è verificato un errore')
+        }
     });
 } else {
     alert('Non hai effettuato nessuna ricerca') //alert per l'utente che non ha
@@ -80,7 +100,7 @@ function stelle(voti){
     }
     return stella
 }
-
+//funzione per sostituire le bandierine corrispondenti alla lingua
 function bandierine(lingua) {
     var array_lingue = ['it', 'en'];
 
