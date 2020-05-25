@@ -38,3 +38,18 @@ input {
     border: none;
     height: 30px;
 }
+.card-film {
+    width: 200px;
+    height: 200px;
+    border: 1px solid red;
+    float: left;
+    margin: 10px;
+    padding: 10px;
+}
+ul li {
+    list-style-type: none;
+}
+.container {
+    margin: auto;
+    width: 1100px;
+}
