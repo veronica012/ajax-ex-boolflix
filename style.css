@@ -23,8 +23,7 @@ header {
     width: 100%;
 }
 .logo {
-    width: 200px;
-    object-fit: contain;
+    width: 150px;
 }
 #ricerca_utente {
     border-radius: 5px;
@@ -62,7 +61,7 @@ ul li {
 .fa-star {
     font-size: 15px;
 }
-img {
-    width: 30px;
-    height: 30px;
+.copertina_film {
+    height: 100px;
+    object-fit: contain;
 }

@@ -23,10 +23,11 @@
         </main>
         <script id="entry-template" type="text/x-handlebars-template">
             <ul class="card-film">
-                <li class="titolo">{{titolo}}</li>
-                <li class="titolo_originale">{{titolo_originale}}</li>
-                <li class="lingua">{{{lingua}}}</li>
-                <li class="voto">{{{voto}}}</li>
+                <li><img src="{{ poster }}" alt="copertina_film" class="copertina_film"></li>
+                <li class="titolo">Titolo: {{titolo}}</li>
+                <li class="titolo_originale">Titolo originale: {{titolo_originale}}</li>
+                <li class="lingua">Lingua originale: {{{lingua}}}</li>
+                <li class="voto">Voto: {{{voto}}}</li>
             </ul>
         </script>
         <script src="main.js" charset="utf-8"></script>

@@ -1,12 +1,17 @@
 $(document).ready(function(){
-
+//variabili
+var url_base ='https://api.themoviedb.org/3' ;
+var api_key ='6fb6f7fed203f8fd60f7a424fa51f6e5' ;
+var url_base_img = 'https://image.tmdb.org/t/p/w185' ;
+//variabili e funzione handlebars
 var template_html = $('#entry-template').html();
 var template_function = Handlebars.compile(template_html);
 //MILESTONE 1
 
 //intercettare il clik sul bottone di ricerca_utente
 $('#bottone').click(function(){
-//leggere il testo scritto dall'ricerca_utente
+
+//leggere il testo scritto dall ' utente in input
     var testo_utente = $('#ricerca_utente').val().trim().toLowerCase();
     console.log(testo_utente);
 //la chiamata ajax parte qunado il testo utente non è una stringa vuota
@@ -18,14 +23,15 @@ $('#bottone').click(function(){
 //chiamata funzione ajax
 
     $.ajax({
-        'url': 'https://api.themoviedb.org/3/search/movie',
+        'url': url_base + '/search/movie',
         'method': 'GET',
         'data': {
-            'api_key': '6fb6f7fed203f8fd60f7a424fa51f6e5',
+            'api_key': api_key,
             'query': testo_utente,
             'language': 'it'
         },
         'success': function(data){
+            console.log(data); //per vedere ciò che restituisce l'api cioè un oggetto, nella chiave results troviamo un array che contiene tanti oggetti
             // recuperare l'array di film
             var array_film = data.results;
             console.log(array_film);
@@ -36,6 +42,7 @@ $('#bottone').click(function(){
                 console.log(film_corrente);
             //creo un nuovo oggetto in cui salvo le proprietà che voglio quindi elimino le variabili create precedentemente
             var nuovo_oggetto = {
+                'poster': url_base_img + film_corrente.poster_path,
                 'titolo':film_corrente.title,
                 'titolo_originale':film_corrente.original_title,
                 'lingua':bandierine(film_corrente.original_language),
@@ -52,12 +59,12 @@ $('#bottone').click(function(){
             alert('Si è verificato un errore')
         }
     });
-    //nuova chiamata ajax
+    //nuova chiamata ajax milestone 2
     $.ajax({
-        'url': 'https://api.themoviedb.org/3/search/tv',
+        'url': url_base + '/search/tv',
         'method': 'GET',
         'data': {
-            'api_key': '6fb6f7fed203f8fd60f7a424fa51f6e5',
+            'api_key': api_key,
             'query': testo_utente,
             'language': 'it'
         },
@@ -71,6 +78,7 @@ $('#bottone').click(function(){
                 console.log(serie_corrente);
                 //creo un nuovo oggetto in cui salvo le proprietà
                 var nuovo_oggetto = {
+                    'poster': url_base_img + serie_corrente.poster_path,
                     'titolo': serie_corrente.name,
                     'titolo_originale': serie_corrente.original_name,
                     'lingua':bandierine(serie_corrente.original_language),
@@ -79,36 +87,49 @@ $('#bottone').click(function(){
                 console.log(nuovo_oggetto);
                 var html_finale = template_function(nuovo_oggetto);
                 $('.container-card').append(html_finale);
-            }
+            } //fine for
 
         },
         'error': function() {
             alert('Si è verificato un errore')
         }
-    });
-} else {
-    alert('Non hai effettuato nessuna ricerca') //alert per l'utente che non ha
+    }); //chiusa seconda chiamata ajax
+} //CHIUSO IF
+    else {
+    alert('Non hai effettuato nessuna ricerca') //alert per l'utente che non ha digitato nulla
 }
 
-});
-//funzione per sostituire le stelle al voto che contiene anche il calcolo dal numero float a intero
+}); //fine click
+
+
+//funzione per sostituire le stelle al voto che contiene anche il calcolo dal numero float a intero milestone2
 function stelle(voti){
     var voto = Math.ceil(voti / 2);
     var stella = '';
     for (var i = 0; i < voto; i++) {
-        stella += '<i class="fas fa-star"></i>';
+        stella += '<i class="fas fa-star"></i>'
     }
     return stella
 }
-//funzione per sostituire le bandierine corrispondenti alla lingua
-function bandierine(lingua) {
-    var array_lingue = ['it', 'en'];
+//var tag_stelle = '';
+//for (var i= 1; i <=voto; i++) {
+//if(i <= voto) {
+// tag_stelle += <i class="fas fa-star"></i>
+// } else {
+// tag_stelle += <i class="far fa-star"></i>
+// }
+//}
+// return tag_stelle
 
+//funzione per sostituire le bandierine corrispondenti alla lingua milestone2 (in alternativa handlebars)
+function bandierine(lingua) {
+    var array_lingue = ['it', 'en', 'ja', 'fr', 'zh', 'es', 'ru', 'el', 'de', 'hi'];
     if (array_lingue.includes(lingua)) {
         var bandierina = '<img src="img/' + lingua + '-flag.png">';
-    } 
-
-    return bandierina
+        return bandierina
+    } else {
+        return lingua; //si può omettere l'else perchè se il primo if è vero l'else non sara eseguito
+    }
 }
 
-});
+}); //fine document.ready
