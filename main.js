@@ -3,6 +3,7 @@ $(document).ready(function(){
 var url_base ='https://api.themoviedb.org/3' ;
 var api_key ='6fb6f7fed203f8fd60f7a424fa51f6e5' ;
 var url_base_img = 'https://image.tmdb.org/t/p/w185' ;
+var copertina_non_disponibile = 'https://lh3.googleusercontent.com/proxy/9stbWHkYZTzENjpwHZmfLnHnIBUFoOLMm65CBUcIk5x6rrUQusG_-6UiqGB2hqhDXQ0ID5hc_yTuUSWziKm1OCxIMea9eIBQIEpXH_DTUOgmfBEAd7WwioOOQstxmirNt9LOmw';
 //variabili e funzione handlebars
 var template_html = $('#entry-template').html();
 var template_function = Handlebars.compile(template_html);
@@ -42,7 +43,7 @@ $('#bottone').click(function(){
                 console.log(film_corrente);
             //creo un nuovo oggetto in cui salvo le proprietà che voglio quindi elimino le variabili create precedentemente
             var nuovo_oggetto = {
-                'poster': url_base_img + film_corrente.poster_path,
+                'poster': poster(film_corrente.poster_path),
                 'titolo':film_corrente.title,
                 'titolo_originale':film_corrente.original_title,
                 'lingua':bandierine(film_corrente.original_language),
@@ -78,7 +79,7 @@ $('#bottone').click(function(){
                 console.log(serie_corrente);
                 //creo un nuovo oggetto in cui salvo le proprietà
                 var nuovo_oggetto = {
-                    'poster': url_base_img + serie_corrente.poster_path,
+                    'poster': poster(serie_corrente.poster_path ),
                     'titolo': serie_corrente.name,
                     'titolo_originale': serie_corrente.original_name,
                     'lingua':bandierine(serie_corrente.original_language),
@@ -129,6 +130,16 @@ function bandierine(lingua) {
         return bandierina
     } else {
         return lingua; //si può omettere l'else perchè se il primo if è vero l'else non sara eseguito
+    }
+}
+//funzione per recuperare il percorso delle copertine Milestone3
+function poster(percorso) {
+    var percorso;
+    if (percorso != null) {
+        var immagine = url_base_img + percorso;
+        return immagine
+    } else {
+        return copertina_non_disponibile
     }
 }
 
