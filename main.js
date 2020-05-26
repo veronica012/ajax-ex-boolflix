@@ -1,9 +1,10 @@
 $(document).ready(function(){
-//variabili
+//variabili fisse (anche costanti nella nuova versione di js, cioè dati non più modificabili)
 var url_base ='https://api.themoviedb.org/3' ;
 var api_key ='6fb6f7fed203f8fd60f7a424fa51f6e5' ;
 var url_base_img = 'https://image.tmdb.org/t/p/w185' ;
 var copertina_non_disponibile = 'https://lh3.googleusercontent.com/proxy/9stbWHkYZTzENjpwHZmfLnHnIBUFoOLMm65CBUcIk5x6rrUQusG_-6UiqGB2hqhDXQ0ID5hc_yTuUSWziKm1OCxIMea9eIBQIEpXH_DTUOgmfBEAd7WwioOOQstxmirNt9LOmw';
+
 //variabili e funzione handlebars
 var template_html = $('#entry-template').html();
 var template_function = Handlebars.compile(template_html);
@@ -17,12 +18,8 @@ $('#bottone').click(function(){
     console.log(testo_utente);
 //la chiamata ajax parte qunado il testo utente non è una stringa vuota
     if (testo_utente != '') {
-//svutare l'input
-    $('#ricerca_utente').val('');
-//ogni nuovo input dell'utente sono eliminati i dati della ricerca precedente
-    $('.container-card').html('');
+    reset_ricerca();
 //chiamata funzione ajax
-
     $.ajax({
         'url': url_base + '/search/movie',
         'method': 'GET',
@@ -41,20 +38,21 @@ $('#bottone').click(function(){
             // recupero ogni singolo film dalla lista
                 var film_corrente= array_film[i];
                 console.log(film_corrente);
-            //creo un nuovo oggetto in cui salvo le proprietà che voglio quindi elimino le variabili create precedentemente
+            // creo un nuovo oggetto in cui salvo le proprietà che voglio quindi elimino le variabili create precedentemente
             var nuovo_oggetto = {
                 'poster': poster(film_corrente.poster_path),
                 'titolo':film_corrente.title,
                 'titolo_originale':film_corrente.original_title,
                 'lingua':bandierine(film_corrente.original_language),
-                'voto': stelle(film_corrente.vote_average)
+                'voto': stelle(film_corrente.vote_average),
+                'trama': film_corrente.overview
             }
             console.log(nuovo_oggetto);
             //stampare in pagina titolo, titolo originale, lingua originale, voto con il template
             // $('main').append('<ul class="lista-proprietà-film"><li class="titolo">' + film_corrente.title +'</li><li class="titolo-originale">' + film_corrente.original_title  + '</li><li class"lingua">' + film_corrente.original_language +'</li><li class="voto-average">' + film_corrente.vote_average + '</li></ul>');
             var html_finale = template_function(nuovo_oggetto);
             $('.container-card').append(html_finale);
-            }
+        }
         },
         'error': function() {
             alert('Si è verificato un errore')
@@ -83,7 +81,8 @@ $('#bottone').click(function(){
                     'titolo': serie_corrente.name,
                     'titolo_originale': serie_corrente.original_name,
                     'lingua':bandierine(serie_corrente.original_language),
-                    'voto': stelle(serie_corrente.vote_average)
+                    'voto': stelle(serie_corrente.vote_average),
+                    'trama': serie_corrente.overview
                 }
                 console.log(nuovo_oggetto);
                 var html_finale = template_function(nuovo_oggetto);
@@ -102,6 +101,12 @@ $('#bottone').click(function(){
 
 }); //fine click
 
+function reset_ricerca() {
+    //svutare l'input
+        $('#ricerca_utente').val('');
+    //ogni nuovo input dell'utente sono eliminati i dati della ricerca precedente
+        $('.container-card').html('');
+}
 
 //funzione per sostituire le stelle al voto che contiene anche il calcolo dal numero float a intero milestone2
 function stelle(voti){
@@ -112,16 +117,6 @@ function stelle(voti){
     }
     return stella
 }
-//var tag_stelle = '';
-//for (var i= 1; i <=voto; i++) {
-//if(i <= voto) {
-// tag_stelle += <i class="fas fa-star"></i>
-// } else {
-// tag_stelle += <i class="far fa-star"></i>
-// }
-//}
-// return tag_stelle
-
 //funzione per sostituire le bandierine corrispondenti alla lingua milestone2 (in alternativa handlebars)
 function bandierine(lingua) {
     var array_lingue = ['it', 'en', 'ja', 'fr', 'zh', 'es', 'ru', 'el', 'de', 'hi'];
