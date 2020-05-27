@@ -74,7 +74,6 @@ $('#bottone').click(function(){
                 var html_finale = template_function(nuovo_oggetto);
                 $('.container-card').append(html_finale);
             } //fine for
-
         },
         'error': function() {
             alert('Si è verificato un errore')
@@ -84,9 +83,8 @@ $('#bottone').click(function(){
     else {
     alert('Non hai effettuato nessuna ricerca') //alert per l'utente che non ha digitato nulla
 }
-
 }); //fine click
-
+//FUNZIONI
 function reset_ricerca() {
     //svutare l'input
         $('#ricerca_utente').val('');
@@ -131,7 +129,6 @@ function poster(percorso) {
     } else {
         percorso_immagine = copertina_non_disponibile
     }
-
     return percorso_immagine
 }
 //funzione che crea l'oggetto
@@ -145,7 +142,7 @@ function crea_oggetto(elemento, tipo) {
         titolo = elemento.title;
         titolo_originale = elemento.original_title;
     }
-
+//OGGETTO
     var nuovo_oggetto = {
         'poster': poster(elemento.poster_path ),
         'titolo': titolo,
@@ -156,5 +153,4 @@ function crea_oggetto(elemento, tipo) {
     }
     return nuovo_oggetto
 }
-
 }); //fine document.ready
