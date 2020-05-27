@@ -25,6 +25,10 @@ header {
 .logo {
     width: 150px;
 }
+.bandierina {
+    width: 30px;
+    height: 20px;
+}
 #ricerca_utente {
     border-radius: 5px;
 }
@@ -46,7 +50,6 @@ h2 {
 .card-film {
     width: 200px;
     height: 300px;
-    float: left;
     margin: 10px;
     perspective: 1000px;
 }
@@ -87,7 +90,8 @@ p {
     height: 100vh;
     margin: auto;
     padding-top: 150px;
-
+    display: flex;
+    flex-wrap: wrap;
 }
 .fa-star {
     font-size: 15px;

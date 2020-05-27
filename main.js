@@ -3,7 +3,7 @@ $(document).ready(function(){
 var url_base ='https://api.themoviedb.org/3' ;
 var api_key ='6fb6f7fed203f8fd60f7a424fa51f6e5' ;
 var url_base_img = 'https://image.tmdb.org/t/p/w185' ;
-var copertina_non_disponibile = 'https://lh3.googleusercontent.com/proxy/9stbWHkYZTzENjpwHZmfLnHnIBUFoOLMm65CBUcIk5x6rrUQusG_-6UiqGB2hqhDXQ0ID5hc_yTuUSWziKm1OCxIMea9eIBQIEpXH_DTUOgmfBEAd7WwioOOQstxmirNt9LOmw';
+var copertina_non_disponibile ='https://www.landsend.com/pps/static/assets/product-detail/images/sorry_image.jpg';
 
 //variabili e funzione handlebars
 var template_html = $('#entry-template').html();
@@ -45,7 +45,7 @@ $('#bottone').click(function(){
             // $('main').append('<ul class="lista-proprietà-film"><li class="titolo">' + film_corrente.title +'</li><li class="titolo-originale">' + film_corrente.original_title  + '</li><li class"lingua">' + film_corrente.original_language +'</li><li class="voto-average">' + film_corrente.vote_average + '</li></ul>');
             var html_finale = template_function(nuovo_oggetto);
             $('.container-card').append(html_finale);
-        }
+        } //fine ciclo for
         },
         'error': function() {
             alert('Si è verificato un errore')
@@ -94,12 +94,20 @@ function reset_ricerca() {
         $('.container-card').html('');
 }
 
-//funzione per sostituire le stelle al voto che contiene anche il calcolo dal numero float a intero milestone2
-function stelle(voti){
-    var voto = Math.ceil(voti / 2);
+//funzione per il calcolo dal numero float a intero milestone2
+function voto(voto) {
+        var voto5 = voto / 2;
+        return Math.ceil(voto5);
+    }
+//funzione per creare le stelle
+function stelle(numero_stelle) {
     var stella = '';
-    for (var i = 0; i < voto; i++) {
-        stella += '<i class="fas fa-star"></i>'
+    for (var i = 1; i <= 5; i++) {
+        if(i <= numero_stelle) {
+            stella += '<i class="fas fa-star"></i>'
+        } else {
+            stella += '<i class="far fa-star"></i>'
+        }
     }
     return stella
 }
@@ -108,7 +116,7 @@ function bandierine(lingua) {
     var array_lingue = ['it', 'en', 'ja', 'fr', 'zh', 'es', 'ru', 'el', 'de', 'hi'];
     var risultato;
     if (array_lingue.includes(lingua)) {
-        risultato = '<img src="img/' + lingua + '-flag.png">';
+        risultato = '<img src="img/' + lingua + '-flag.png" class="bandierina">'
     } else {
         risultato = lingua; //si può omettere l'else perchè se il primo if è vero l'else non sara eseguito
     }
@@ -143,7 +151,7 @@ function crea_oggetto(elemento, tipo) {
         'titolo': titolo,
         'titolo_originale': titolo_originale,
         'lingua':bandierine(elemento.original_language),
-        'voto': stelle(elemento.vote_average),
+        'voto': stelle(voto(elemento.vote_average)),
         'trama': elemento.overview
     }
     return nuovo_oggetto
