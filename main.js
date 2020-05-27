@@ -39,14 +39,7 @@ $('#bottone').click(function(){
                 var film_corrente= array_film[i];
                 console.log(film_corrente);
             // creo un nuovo oggetto in cui salvo le proprietà che voglio quindi elimino le variabili create precedentemente
-            var nuovo_oggetto = {
-                'poster': poster(film_corrente.poster_path),
-                'titolo':film_corrente.title,
-                'titolo_originale':film_corrente.original_title,
-                'lingua':bandierine(film_corrente.original_language),
-                'voto': stelle(film_corrente.vote_average),
-                'trama': film_corrente.overview
-            }
+            var nuovo_oggetto = crea_oggetto(film_corrente, 'movie')
             console.log(nuovo_oggetto);
             //stampare in pagina titolo, titolo originale, lingua originale, voto con il template
             // $('main').append('<ul class="lista-proprietà-film"><li class="titolo">' + film_corrente.title +'</li><li class="titolo-originale">' + film_corrente.original_title  + '</li><li class"lingua">' + film_corrente.original_language +'</li><li class="voto-average">' + film_corrente.vote_average + '</li></ul>');
@@ -76,14 +69,7 @@ $('#bottone').click(function(){
                 var serie_corrente = array_serietv[i];
                 console.log(serie_corrente);
                 //creo un nuovo oggetto in cui salvo le proprietà
-                var nuovo_oggetto = {
-                    'poster': poster(serie_corrente.poster_path ),
-                    'titolo': serie_corrente.name,
-                    'titolo_originale': serie_corrente.original_name,
-                    'lingua':bandierine(serie_corrente.original_language),
-                    'voto': stelle(serie_corrente.vote_average),
-                    'trama': serie_corrente.overview
-                }
+                var nuovo_oggetto = crea_oggetto(serie_corrente, 'tv');
                 console.log(nuovo_oggetto);
                 var html_finale = template_function(nuovo_oggetto);
                 $('.container-card').append(html_finale);
@@ -120,22 +106,47 @@ function stelle(voti){
 //funzione per sostituire le bandierine corrispondenti alla lingua milestone2 (in alternativa handlebars)
 function bandierine(lingua) {
     var array_lingue = ['it', 'en', 'ja', 'fr', 'zh', 'es', 'ru', 'el', 'de', 'hi'];
+    var risultato;
     if (array_lingue.includes(lingua)) {
-        var bandierina = '<img src="img/' + lingua + '-flag.png">';
-        return bandierina
+        risultato = '<img src="img/' + lingua + '-flag.png">';
     } else {
-        return lingua; //si può omettere l'else perchè se il primo if è vero l'else non sara eseguito
+        risultato = lingua; //si può omettere l'else perchè se il primo if è vero l'else non sara eseguito
     }
+    return risultato
 }
 //funzione per recuperare il percorso delle copertine Milestone3
 function poster(percorso) {
-    var percorso;
+    var percorso_immagine;
     if (percorso != null) {
         var immagine = url_base_img + percorso;
-        return immagine
+        percorso_immagine = immagine;
     } else {
-        return copertina_non_disponibile
+        percorso_immagine = copertina_non_disponibile
     }
+
+    return percorso_immagine
+}
+//funzione che crea l'oggetto
+function crea_oggetto(elemento, tipo) {
+    var titolo= '';
+    var titolo_originale = '';
+    if(tipo == 'tv') {
+        titolo = elemento.name;
+        titolo_originale = elemento.original_name;
+    } else {
+        titolo = elemento.title;
+        titolo_originale = elemento.original_title;
+    }
+
+    var nuovo_oggetto = {
+        'poster': poster(elemento.poster_path ),
+        'titolo': titolo,
+        'titolo_originale': titolo_originale,
+        'lingua':bandierine(elemento.original_language),
+        'voto': stelle(elemento.vote_average),
+        'trama': elemento.overview
+    }
+    return nuovo_oggetto
 }
 
 }); //fine document.ready
